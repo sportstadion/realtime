@@ -73,12 +73,18 @@ var requestRealTimeData = function(err, analytics) {
 
     loop.replace(profiles);
 
+    loop_time = 500
+
     loop.loop(function(profile) {
         requestRealTimeDataForProfile(analytics, profile)
-    }, 250, 1000);
+    }, loop_time, 100);
 };
 
 var requestRealTimeDataForProfile = function(analytics, profile) {
+
+    console.log('profile',profile.name)
+
+    // Getting realtime visitors
     var params = {
         ids:     "ga:" + profile.id,
         metrics: 'rt:activeUsers'
@@ -89,15 +95,38 @@ var requestRealTimeDataForProfile = function(analytics, profile) {
             console.log(err);
             return;
         }
-
         if (data.totalsForAllResults) {
             profile.activeUsers = data.totalsForAllResults['rt:activeUsers'];
-            console.log(profile.name);
-            console.log(profile.activeUsers);
-
-            io.emit('data-update', { profile: profile });
         }
     });
+
+    // Getting active pages
+    var params = {
+        ids:     "ga:" + profile.id,
+        dimensions: 'rt:pagePath',
+        metrics: 'rt:activeUsers',
+        'max-results': 5,
+        sort: '-rt:activeUsers'
+    };
+
+    analytics.data.realtime.get(params, function(err, data) {
+        if (err) {
+            console.log(err);
+            return;
+        }
+
+        if (data.rows) {
+            profile.activePages = data.rows;
+        }
+    });
+
+    // Pushing
+    io.emit('data-update', { profile: profile });
 };
+
+var requestRealTimePageDataForProfile = function(analytics, profile) {
+
+};
+
 
 exports.start = start;

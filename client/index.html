@@ -15,10 +15,15 @@
     <script src="/assets/js/lib/colibri.min.js"></script>
 
     <script type="text/template" id="counter-row-template">
-        <span class="counter"><%= activeUsers %></span>
         <img src="<%= favicon %>" class="favicon" />
         <span class="name"><%= name %></span>
+        <span class="counter"><%= activeUsers %></span>
         <span class="circle" />
+        <ul class="pages">
+            <% _.each(activePages, function(page){ %>
+            <li><%= page[0] %> <span><%= page[1] %></span></li>
+            <% }); %>
+        </ul>
     </script>
 
     <script type="text/template" id="totals-counter-template">
@@ -46,6 +51,10 @@
 
             activeUsers: function() {
                 return parseInt(this.get("activeUsers"))
+            },
+            activePages: function(){
+                return this.get("activePages") || {}
+
             }
         });
 
@@ -88,6 +97,7 @@
             render: function() {
                 var templateHtml = jQuery("#counter-row-template").html();
                 var attributes = this.model.attributes;
+
                 var template = _.template(templateHtml);
                 this.$el.html(template(attributes));
 
@@ -179,12 +189,12 @@
                     ]
                 }, {
                     donut: true,
-                    donutWidth: 40,
+                    donutWidth: 20,
                     startAngle: 270,
                     total: profiles.maximumTotalActiveUsers * 2,
                     showLabel: false,
-                    width: "400px",
-                    height: "300px"
+                    width: "200px",
+                    height: "150px"
                 });
             };
 
@@ -197,7 +207,6 @@
 
             socket.on('data-update', function(data) {
                 var profile = new Profile(data.profile);
-                console.log(profile.get("name") + ": " + profile.get("activeUsers"));
                 profiles.add(profile, { merge: true });
             });
 
@@ -209,7 +218,7 @@
 </head>
 <body class="dark">
     <div id="container">
-        <div id="totals" class="column">
+        <div id="totals">
             <div id="totals-gauge" class="ct-chart"></div>
             <div id="totals-counter-container">
                 <span class="outro">active users</span>

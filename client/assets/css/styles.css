@@ -2,14 +2,17 @@
     font-family: Arial;
 }
 
+body{
+    margin:0;
+}
+
 .dark {
     background: #444;
     color: white;
 }
 
 #container {
-    margin: 5% auto;
-    width: 80%;
+
 }
 
 .column {
@@ -17,7 +20,6 @@
     margin: 0;
     padding: 0;
     vertical-align: top;
-    width: 49%;
 }
 
 #totals {
@@ -30,16 +32,16 @@
 
 #totals-counter-container {
     position: relative;
-    top: -64px;
+    top: -8px;
 }
 
 #totals-counter {
-    font-size: 96px;
+    font-size: 36px;
     font-weight: bold;
 }
 
 #totals-gauge {
-    height: 150px;
+    height: 50px;
     width: 400px;
     margin: 0 auto;
 }
@@ -58,12 +60,17 @@
 
 #counters {
     list-style-type: none;
+    width: 100%;
 }
 
 .counter-row {
-    border-bottom: 3px solid #ddd;
     padding: 13px 0;
     position: relative;
+    float:left;
+    width: 31%;
+    margin: 0 1% 1%;
+    height: 160px;
+    background: #555;
 }
 
 .dark .counter-row {
@@ -80,14 +87,17 @@
     display: inline-block;
     width: 4em;
     text-align: right;
+    right: 20px;
+    position:absolute;
+
 }
 
 .favicon {
-    background: white;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    border-radius: 3px;
+#    background: white;
+#    border: 1px solid rgba(0, 0, 0, 0.2);
+#    border-radius: 3px;
     height: 20px;
-    margin: 0 1em;
+    margin: 0 1em 0 25px;
     padding: 3px;
     width: 20px;
 }
@@ -98,6 +108,37 @@
     height: 20px;
     border-radius: 50%;
     position: absolute;
-    right: 0;
+    right: 20px;
     margin-top: 4px;
+    display:none;
 }
+
+.pages{
+    list-style: none;
+    color: #999;
+    font-size:14px;
+    padding:0 20px;
+}
+
+.pages li{
+    padding: 3px 0 3px 10px;
+    border-top: 1px solid #666;
+    position:relative;
+    overflow:hidden;
+    height: 16px;
+    line-height: 18px;
+    padding-right: 100px;
+}
+
+.pages li:first-child{
+    border:none;
+}
+
+.pages li span{
+    position: absolute;
+    right: 0;
+    top: 0;
+    background: #555;
+    padding-left: 10px;
+}
+
