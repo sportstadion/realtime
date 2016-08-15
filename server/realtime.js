@@ -73,7 +73,7 @@ var requestRealTimeData = function(err, analytics) {
 
     loop.replace(profiles);
 
-    loop_time = 500
+    loop_time = 5000
 
     loop.loop(function(profile) {
         requestRealTimeDataForProfile(analytics, profile)
